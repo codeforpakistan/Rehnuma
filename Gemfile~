@@ -65,7 +65,11 @@ group :test, :development do
 end
 
 # Use debugger
- gem 'debugger', group: [:development, :test]
+  gem 'debugger', group: [:development, :test]
+
+# Scheduler to schedule Sms Request handler jobs
+  gem 'rufus-scheduler'
+
 
 group :test do
   gem "sqlite3"                           # Use SQLite instead of PostgreSQL for tests

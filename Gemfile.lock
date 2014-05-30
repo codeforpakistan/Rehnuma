@@ -289,7 +289,7 @@ DEPENDENCIES
   cancan
   capybara (~> 2.1)
   coffee-rails (~> 3.2.1)
-  curb
+  curb (~> 0.8.5)
   dalli
   debugger
   delayed_job_active_record
