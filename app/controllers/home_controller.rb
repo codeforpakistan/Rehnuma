@@ -30,6 +30,14 @@ class HomeController < ApplicationController
         receiver["+92"] = "0"
 
         user_text =  my_message[0]["text"]
+        gsm_network =  my_message[0]["gsm_network"]
+        sent_time =  my_message[0]["time"]
+
+
+        @sms_query = SmsQueries.new(sender_number: receiver, text:user_text, gsm_network:gsm_network, time:sent_time)
+
+        @sms_query.save()
+
 
        # query = filter_long_or_empty(user_text)
         query = user_text
@@ -42,9 +50,7 @@ class HomeController < ApplicationController
         @results = Article.search(query_expanded).select(&:published?)
 
         @results.each do |article|
-
            #link_to article.title, article_path(article.id)
-
            message = article.preview
            sent_response = smile_manager.send_sms(receiver,sender,message)
         end
@@ -57,6 +63,12 @@ class HomeController < ApplicationController
 
   end
 
+
+  private
+  def sms_query_params
+    #params.require(:sender_number).permit(:sender_number, :text, :gsm_network, :time)
+    params.permit(:sender_number, :text, :gsm_network, :time)
+  end
   def about
   end
 
