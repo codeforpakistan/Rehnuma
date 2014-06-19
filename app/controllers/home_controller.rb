@@ -32,12 +32,8 @@ class HomeController < ApplicationController
         user_text =  my_message[0]["text"]
         gsm_network =  my_message[0]["gsm_network"]
         sent_time =  my_message[0]["time"]
-
-
         @sms_query = SmsQueries.new(sender_number: receiver, text:user_text, gsm_network:gsm_network, time:sent_time)
-
         @sms_query.save()
-
 
        # query = filter_long_or_empty(user_text)
         query = user_text
@@ -51,8 +47,20 @@ class HomeController < ApplicationController
 
         @results.each do |article|
            #link_to article.title, article_path(article.id)
-           message = article.preview
-           sent_response = smile_manager.send_sms(receiver,sender,message)
+           #message = article.preview
+           @message = article.content_main
+
+           if @message.length > 430
+              long_message = [1,2]
+              long_message[0] = @message[0,430]
+              long_message[1] = @message[431..-1]
+              long_message.each do |m|
+                sent_response = smile_manager.send_sms(receiver,sender,m)
+              end
+           else
+             sent_response = smile_manager.send_sms(receiver,sender,message)
+           end
+
         end
 
 
