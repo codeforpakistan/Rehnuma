@@ -188,14 +188,19 @@ a.hnl-logo {
   color: #FFFFFF;
   font-family: Oswald, "News Cycle", Helvetica, Tahoma, Arial, sans-serif;
   letter-spacing:0.08em;
-  border-bottom: 7px solid #ffde4d;
+  border:none;
   text-decoration: none;
   text-transform: uppercase;
   line-height: 70%;
 }
 
 a.hnl-logo:hover {
-  border-bottom: 10px solid #ffde4d;
+  border:none;
+}
+a.hnl-logo > img {
+    border:none;
+    width: 120px;
+
 }
 
 .sidebar-content  {
@@ -212,7 +217,7 @@ div.navbar-top {
 }
 div.logo {
   display: inline-block;
-  padding-top:35px;
+  padding-top:26px;
 }
 img.beta {
   margin-top: -65px;
