@@ -546,7 +546,6 @@ ul.footer-links li a:hover {
 .cfa-logos {
   float: right;
   display: block;
-  width: 425px;
 }
 .cfa-logos a, .cfa-logos a:hover {
   text-decoration: none;
@@ -566,7 +565,7 @@ ul.footer-links li a:hover {
   font-size: 20px;
 }
 
-
+.hnlanswer-footer {font-size: 12px; color: #ffffff; }
 
 /* Search results page */
 /* ------------------- */
