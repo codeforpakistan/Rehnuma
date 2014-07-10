@@ -27,9 +27,6 @@ User.create([
   { :email => "admin@example.com", :password => "adminn", :password_confirmation => "adminn", :is_admin => true }
 ])
 
-puts "Admin user created:"
-puts "  email: admin@example.com"
-puts "  password: adminn"
 
 Article.create([
 
