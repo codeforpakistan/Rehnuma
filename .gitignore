@@ -32,4 +32,3 @@ coverage/
 tags
 
 config/database.yml
-session.txt

@@ -107,16 +107,10 @@ class Smile_Api
       require 'json'
       # Set the request URL
       url = "http://api.smilesn.com/session?username="+user_name+"&password="+password
-
       data = open_smile_uri(url)
-
       data=JSON.parse(data)
-
-
       sessionid= data['sessionid']
-
-      #file2 = File.open('session.txt', 'w')
-
+      file2 = File.open('session.txt', 'w')
       file1 = File.open('session.txt', 'a')
       file1.write(sessionid)
       file1.close
@@ -128,7 +122,7 @@ class Smile_Api
 
   def open_smile_uri(url)
     begin
-      debugger
+
       curl = Curl::Easy.new(url)
       curl.perform
 
@@ -149,7 +143,6 @@ class Smile_Api
     sender_num=URI.escape(sender_num)
     text_message=URI.escape(text_message)
     session_file = File.open("session.txt")
-
     session_id = File.read("session.txt")
     if session_id.blank?
 
