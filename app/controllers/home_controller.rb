@@ -95,6 +95,8 @@ class Smile_Api
   require 'uri'
   require 'rubygems'
   require 'curb'
+
+
   def get_session
 
     if not ((ENV['smile_user']) && (ENV['smile_password']))
@@ -110,10 +112,14 @@ class Smile_Api
       data = open_smile_uri(url)
       data=JSON.parse(data)
       sessionid= data['sessionid']
-      file2 = File.open('session.txt', 'w')
-      file1 = File.open('session.txt', 'a')
-      file1.write(sessionid)
-      file1.close
+      @sessionid = sessionid
+      #cookies[:smile_session] = { :value => @sessionid, :expires => 10.hours.from_now }
+      #cookies[:email] = 'user@example.com'
+
+      #file2 = File.open('session.txt', 'w')
+      #file1 = File.open('session.txt', 'a')
+      #file1.write(sessionid)
+      #file1.close
 
       return sessionid
     end
@@ -142,8 +148,9 @@ class Smile_Api
     receive_num=URI.escape(receive_num)
     sender_num=URI.escape(sender_num)
     text_message=URI.escape(text_message)
-    session_file = File.open("session.txt")
-    session_id = File.read("session.txt")
+    #session_file = File.open("session.txt")
+    #session_id = File.read("session.txt")
+    session_id  =  @sessionid
     if session_id.blank?
 
       session_id = self.get_session
@@ -154,7 +161,8 @@ class Smile_Api
     data = open_smile_uri(url)
 
       data2=JSON.parse(data)
-      response_status=data2["status"]
+    @sessionid =''
+    response_status=data2["status"]
 
 #=====* START - IF SESSION EXPIRED IS RETURN, GENERATE ANOTHER SESSION & RETRY
       if(response_status=="SESSION_EXPIRED")
@@ -173,15 +181,16 @@ class Smile_Api
 
   def receive_sms
 
-    session_file = File.open("session.txt")
-    session_id = File.read("session.txt")
-
+    #session_file = File.open("session.txt")
+    #session_id = File.read("session.txt")
+    session_id  =  @sessionid
     if session_id.blank?
       session_id = self.get_session
     end
+    
     url = "http://api.smilesn.com/receivesms?sid="+session_id
     data = open_smile_uri(url)
-
+    @sessionid =''
     if(data.nil?)
       #puts "Smile Api Connectivity Problem"
     else
