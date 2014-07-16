@@ -33,13 +33,13 @@
         </div>
         <ul class="nav-top span5">
           <li class="">
-            <%= link_to("Quick Answers", "/articles/article-type/quick-answer") %>
+            <%= link_to("Quick Answers", "/articles/article-type/quick-answer", :onclick => "_gaq.push(['_trackEvent', 'QuickAnswers', 'HeaderAnchor', 'Quick Answers']);") %>
           </li>
          <!-- <li class="">
             <%= link_to("Guides", "/articles/article-type/guide") %>
           </li> -->
           <li class="">
-            <%= link_to("Web Services", "/articles/article-type/web-service") %>
+            <%= link_to("Web Services", "/articles/article-type/web-service", :onclick => "_gaq.push(['_trackEvent', 'WebServices', 'HeaderAnchor', 'Web Services ']);") %>
           </li>
         </ul>
         <% if !current_page?('/')  %>

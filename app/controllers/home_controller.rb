@@ -18,7 +18,6 @@ class HomeController < ApplicationController
       message = "Kp Rehnuma--Comming Soon"
       smile_manager =  Smile_Api.new
       smile_response =  smile_manager.receive_sms()
-
       if(smile_response.nil?)
         #puts "Smile Api Connectivity Problem"
       else
@@ -129,6 +128,7 @@ class Smile_Api
 
   def open_smile_uri(url)
     begin
+      debugger
       curl = Curl::Easy.new(url)
       curl.perform
 
