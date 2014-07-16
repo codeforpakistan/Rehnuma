@@ -159,9 +159,9 @@ class Smile_Api
     url = "http://api.smilesn.com/sendsms?sid="+session_id+"&receivenum="+receive_num+"&sendernum=8333&textmessage="+text_message
 
     data = open_smile_uri(url)
-
-      data2=JSON.parse(data)
-    @sessionid =''
+    debugger
+    data2=JSON.parse(data)
+    @sessionid = ''
     response_status=data2["status"]
 
 #=====* START - IF SESSION EXPIRED IS RETURN, GENERATE ANOTHER SESSION & RETRY
@@ -187,14 +187,15 @@ class Smile_Api
     if session_id.blank?
       session_id = self.get_session
     end
-    
+
     url = "http://api.smilesn.com/receivesms?sid="+session_id
     data = open_smile_uri(url)
-    @sessionid =''
+    @sessionid = ''
     if(data.nil?)
       #puts "Smile Api Connectivity Problem"
     else
       data2=JSON.parse(data)
+      debugger
       response_status=data2["status"]
 #=====* START - IF SESSION EXPIRED IS RETURN, GENERATE ANOTHER SESSION & RETRY
       if(response_status=="SESSION_EXPIRED")
