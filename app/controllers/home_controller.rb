@@ -183,6 +183,7 @@ class Smile_Api
 
     #session_file = File.open("session.txt")
     #session_id = File.read("session.txt")
+
     session_id  =  @sessionid
     if session_id.blank?
       session_id = self.get_session
