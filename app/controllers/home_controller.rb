@@ -203,13 +203,7 @@ class Smile_Api
         data = open_smile_uri(url)
       end
 #=====* END - IF SESSION EXPIRED IS RETURN, GENERATE ANOTHER SESSION & RETRY
-
-
       return data
     end
-
   end
-
-
 end
-
