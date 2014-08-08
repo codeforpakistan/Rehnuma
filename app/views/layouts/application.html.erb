@@ -10,9 +10,20 @@
   <%= stylesheet_link_tag    "application-mobile", :media => "all and (max-width: 969px)" %>
   <%= stylesheet_link_tag    "application-print", :media => "print" %>
 
+  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
   <link href="/assets/favinew.ico"  rel="shortcut icon" type="image/x-icon" />
 
+   <script type="text/javascript">
 
+       $(document).ready(function(){
+           var images = ['../assets/new_background_image.jpg', '../assets/bg_image_two.jpg', '../assets/bg_image_three.jpg', '../assets/bg_image_four.jpg'];
+           $('body').css({'background-image': 'url(images/' + images[Math.floor(Math.random() *      images.length)] + ')'});
+       });
+
+
+   </script>
   <!--[if lte IE 8]>
     <%= stylesheet_link_tag    "application-ie", :media=> "all" %>
   <![endif]-->
