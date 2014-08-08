@@ -58,6 +58,7 @@ class HomeController < ApplicationController
                 sent_response = smile_manager.send_sms(receiver,sender,m)
               end
             else
+              message = @message
               sent_response = smile_manager.send_sms(receiver,sender,message)
             end
 
