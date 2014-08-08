@@ -3,6 +3,8 @@ class Smile_Api
   require 'uri'
   require 'rubygems'
   require 'curb'
+
+
   def get_session
 
     if not ((ENV['smile_user']) && (ENV['smile_password']))
@@ -15,19 +17,17 @@ class Smile_Api
       require 'json'
       # Set the request URL
       url = "http://api.smilesn.com/session?username="+user_name+"&password="+password
-
       data = open_smile_uri(url)
-
       data=JSON.parse(data)
-
-
       sessionid= data['sessionid']
+      @sessionid = sessionid
+      #cookies[:smile_session] = { :value => @sessionid, :expires => 10.hours.from_now }
+      #cookies[:email] = 'user@example.com'
 
-      file2 = File.open('session.txt', 'w')
-
-      file1 = File.open('session.txt', 'a')
-      file1.write(sessionid)
-      file1.close
+      #file2 = File.open('session.txt', 'w')
+      #file1 = File.open('session.txt', 'a')
+      #file1.write(sessionid)
+      #file1.close
 
       return sessionid
     end
@@ -36,6 +36,7 @@ class Smile_Api
 
   def open_smile_uri(url)
     begin
+
       curl = Curl::Easy.new(url)
       curl.perform
 
@@ -55,9 +56,9 @@ class Smile_Api
     receive_num=URI.escape(receive_num)
     sender_num=URI.escape(sender_num)
     text_message=URI.escape(text_message)
-    session_file = File.open("session.txt")
-
-    session_id = File.read("session.txt")
+    #session_file = File.open("session.txt")
+    #session_id = File.read("session.txt")
+    session_id  =  @sessionid
     if session_id.blank?
 
       session_id = self.get_session
@@ -66,54 +67,52 @@ class Smile_Api
     url = "http://api.smilesn.com/sendsms?sid="+session_id+"&receivenum="+receive_num+"&sendernum=8333&textmessage="+text_message
 
     data = open_smile_uri(url)
-    if(data.nil?)
-      puts "No internet"
-    else
-      data2=JSON.parse(data)
-      response_status=data2["status"]
+
+    data2=JSON.parse(data)
+    @sessionid = ''
+    response_status=data2["status"]
 
 #=====* START - IF SESSION EXPIRED IS RETURN, GENERATE ANOTHER SESSION & RETRY
-      if(response_status=="SESSION_EXPIRED")
+    if(response_status=="SESSION_EXPIRED")
 
-        session_id = self.get_session
-        data = open_smile_uri(url)
-        #data=File.read("http://api.smilesn.com/sendsms?sid="+session_id+"&receivenum="+receive_num+"&sendernum=8333&textmessage="+text_message)
-      end
+      session_id = self.get_session
+      data = open_smile_uri(url)
+      #data=File.read("http://api.smilesn.com/sendsms?sid="+session_id+"&receivenum="+receive_num+"&sendernum=8333&textmessage="+text_message)
+    end
 
 #=====* END - IF SESSION EXPIRED IS RETURN, GENERATE ANOTHER SESSION & RETRY
 
-      return data
-    end
+    return data
 
   end
 
 
   def receive_sms
-    debugger
-    session_file = File.open("session.txt")
-    session_id = File.read("session.txt")
 
+    #session_file = File.open("session.txt")
+    #session_id = File.read("session.txt")
+
+    session_id  =  @sessionid
     if session_id.blank?
       session_id = self.get_session
     end
+
     url = "http://api.smilesn.com/receivesms?sid="+session_id
     data = open_smile_uri(url)
-    debugger
-    data2=JSON.parse(data)
-    response_status=data2["status"]
-
-
+    @sessionid = ''
+    if(data.nil?)
+      #puts "Smile Api Connectivity Problem"
+    else
+      data2=JSON.parse(data)
+      response_status=data2["status"]
 #=====* START - IF SESSION EXPIRED IS RETURN, GENERATE ANOTHER SESSION & RETRY
-    if(response_status=="SESSION_EXPIRED")
-      session_id = self.get_session
-      url = "http://api.smilesn.com/receivesms?sid="+session_id
-      data = open_smile_uri(url)
-    end
+      if(response_status=="SESSION_EXPIRED")
+        session_id = self.get_session
+        url = "http://api.smilesn.com/receivesms?sid="+session_id
+        data = open_smile_uri(url)
+      end
 #=====* END - IF SESSION EXPIRED IS RETURN, GENERATE ANOTHER SESSION & RETRY
-
-
-    return data
+      return data
+    end
   end
-
-
 end

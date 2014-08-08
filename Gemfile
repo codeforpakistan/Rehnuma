@@ -66,6 +66,7 @@ end
 
 # Use debugger
   gem 'debugger', group: [:development, :test]
+  
 
 # Dealing with URI
   gem 'curb'
