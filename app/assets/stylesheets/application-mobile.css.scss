@@ -94,16 +94,17 @@
   }
   /* homepage: remove lines, welcome text. fix search bar */
   #welcome-line-l{
-    display: none !important; 
+    display: block !important;
+    width: 15% !important;
   }
   #welcome-line-r{
-    display: none !important;
+    display: block !important;
+    width: 15% !important;
   }
-  .welcome{
-    display: none !important;
   }
   .home-modal{
-    display: none !important;
+    display: block !important;
+    font-size: 2.0em !important;
   }
   .ribbon-wrapper{
     text-align: center !important;
@@ -113,7 +114,7 @@
     width: 100% !important;
   }
   .ribbon-front .btn-search{
-    display: none;
+    /*display: none;*/
   }
   /* move the main part down a bit */
   .page-container{
@@ -152,4 +153,3 @@
     background-color: #000;
     padding-bottom: 10px;
   }
-}
