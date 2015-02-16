@@ -16,7 +16,7 @@ login: &login
 development:
   adapter: postgresql
   encoding: unicode
-  database: dbrehnuma
+  database: honoluluanswers_dev
   host: localhost
   pool: 5
   timeout: 5000
